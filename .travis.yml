@@ -1,0 +1,19 @@
+language: c
+os:
+- linux
+- osx
+addons:
+  apt:
+    packages:
+    - make
+before_install:
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+- if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install make; fi
+script:
+- make install
+git:
+  depth: 1
+  quiet: true
+notifications:
+  slack:
+    secure: pgKsUWiIkNpkp6nFBanLEtTqRvpUl0GjTGMlEZAxsppy7VKvAHIwfaLsrI2rPZedU3RGApDW5SE1wK5KdZnunO+rlLyjB/Jk3bMvZUGeRR3zXBn8CdrE2zUs6THbDAaLrMPd1GFV1O12hObGZAXvi4QVP6kGbDS07JlJBxSUT8arpwkBsThCQSzvXGNJWp18UsnhxHeKRISLTt+F4QfJi37KckVpT+z5tdOsxZ3oGBFrdtJE4AgBT+Y1nC1SuIoYAfuEsGF9tv5hDBicKoNXDzIbCNJwpsVCKPnDtozU57L38oG/tQC5uK/XBaBqzPykZFhUsAHzUbVYjd9UNOnRqeoWhFX+G+8ezeaqNYNqo3BD66/GqT+LUEtQvPU9xbXuWPma0fbkLje7T3NR5q1dCOI2+U0xCVIv+dIOZfbXkiI08p0s7yGeQupFeHDmutl5ilHQZDLaKLfWepnHZXzVk9Dz7OSTP1CER2iSOmNZ6PnfjXTNGpVT/N3T5/Me06/2IrZHU5JW9QIcf7h0KwV7hZYriDFZBdzV9m6sCrROEMZEOaPGS8PpBM8sPCvxEMc7TniV1ulSVvB7fd+5UzbzSE0bwgjmTaBYNPFk0qtZpmZVTV2TP0s5mJLZ+ZKMdZSFGmM4COppxE1tj8ly949XRgJV2pdLKQALJq+gQWqmCPA=
