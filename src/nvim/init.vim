@@ -1,12 +1,11 @@
-if &compatible
-	set nocompatible
-endif
-set runtimepath+=~/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim
+let XDG_CONFIG_PATH = $XDG_CONFIG_PATH != '' ? $XDG_CONFIG_PATH : '~/.config'
 
-if dein#load_state('~/.config/nvim/dein.vim')
-	call dein#begin('~/.config/nvim/dein.vim')
+execute 'set runtimepath+=' . XDG_CONFIG_PATH . '/nvim/dein.vim/repos/github.com/Shougo/dein.vim'
 
-	call dein#add('~/.config/nvim/dein.vim')
+if dein#load_state(XDG_CONFIG_PATH . '/nvim/dein.vim')
+	call dein#begin(XDG_CONFIG_PATH . '/nvim/dein.vim')
+
+	call dein#add(XDG_CONFIG_PATH . '/nvim/dein.vim')
 
 	call dein#end()
 	call dein#save_state()
