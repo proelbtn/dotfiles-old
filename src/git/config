@@ -1,0 +1,11 @@
+[user]
+	name = proelbtn
+	email = proelbtn@users.noreply.github.com
+[merge]
+	ff = false
+	ff = false
+[pull]
+	ff = only
+	ff = only
+[core]
+	autocrlf = input

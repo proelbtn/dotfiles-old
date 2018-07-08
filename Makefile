@@ -26,4 +26,7 @@ install/nvim: ensure/XDG_CONFIG_DIR install/nvim/dein.vim
 install/nvim/dein.vim:
 	curl $(URL_DEIN_VIM) | sh /dev/stdin "$(XDG_CONFIG_DIR)/nvim/dein.vim"
 
+# ==============================================================================
 
+install/git:
+	ln -sf "$(PWD)/src/git/config" "$(HOME)/.gitconfig"
