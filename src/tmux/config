@@ -1,0 +1,33 @@
+bind | split-window -h
+bind - split-window -v
+
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
+
+set -sg escape-time 0
+
+set -g status-bg "colour238"
+set -g status-fg "colour255"
+
+set-window-option -g window-status-current-format "#[fg=colour255,bg=colour27,bold] #I: #W #[default]"
+
+set -g pane-border-fg white
+set -g pane-active-border-fg green
+
+set -g status-left-length 20
+set -g status-left "#[bg=colour241] S:#S W:#I P:#P #[default]"
+set -g status-right "#[bg=colour241] %Y-%m-%d %H:%M:%S #[default]"
+set -g status-interval 1
+set -g status-justify centre
+# setw -g monitor-activity on
+# set -g visual-activity on
+set -g status-position top
+
+set-option -g default-terminal "xterm-256color"
