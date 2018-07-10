@@ -59,7 +59,7 @@ motd:
 
 # ==============================================================================
 
-install: install/nvim install/git
+install: install/nvim install/git install/tmux
 	$(SUCCESS) completed installation
 
 # ==============================================================================
@@ -86,6 +86,13 @@ install/git:
 	$(INFO) installing git
 	ln -sf "$(PWD)/src/git/config" "$(HOME)/.gitconfig"
 	$(SUCCESS) installed git
+
+# ==============================================================================
+
+install/tmux:
+	$(INFO) installing tmux
+	ln -sf "$(PWD)/src/tmux/config" "$(HOME)/.tmux.conf"
+	$(SUCCESS) installed tmux
 
 # ==============================================================================
 
