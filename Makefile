@@ -59,8 +59,25 @@ motd:
 
 # ==============================================================================
 
-install: install/nvim install/git install/tmux
+install: install/zsh install/nvim install/git install/tmux
 	$(SUCCESS) completed installation
+
+# ==============================================================================
+
+install/zsh: ensure/XDG_CONFIG_DIR install/zsh-syntax-highlighting
+	$(INFO) installing zsh
+	ln -sf "$(PWD)/src/zsh/loader.zsh" "$(HOME)/.zshrc"
+	mkdir -p "$(XDG_CONFIG_DIR)/zsh/sources"
+	ln -sf "$(PWD)/src/zsh/master.zsh" "$(XDG_CONFIG_DIR)/zsh/sources/00_master.zsh"
+	$(SUCCESS) installed zsh
+
+# ==============================================================================
+
+URL_ZSH_SYNTAX_HIGHLIGHTING = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+
+install/zsh-syntax-highlighting: ensure/XDG_CONFIG_DIR
+	[[ ! -d "$(XDG_CONFIG_DIR)/zsh/highlighting" ]] && \
+		git clone --depth=1 $(URL_ZSH_SYNTAX_HIGHLIGHTING) "$(XDG_CONFIG_DIR)/zsh/highlighting" || true
 
 # ==============================================================================
 
@@ -77,7 +94,7 @@ URL_DEIN_VIM = "https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/ins
 # dein.vim is installed in ~/.config/nvim/dein.vim
 install/dein.vim:
 	$(INFO) installing dein.vim
-	curl $(URL_DEIN_VIM) $(SILENT_ERR) | sh /dev/stdin "$(XDG_CONFIG_DIR)/nvim/dein.vim" $(SILENT_ALL)
+	curl $(URL_DEIN_VIM) | sh /dev/stdin "$(XDG_CONFIG_DIR)/nvim/dein.vim" $(SILENT_ALL)
 	$(SUCCESS) installed dein.vim
 
 # ==============================================================================
