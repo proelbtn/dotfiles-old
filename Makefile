@@ -76,8 +76,9 @@ install/zsh: ensure/XDG_CONFIG_DIR install/zsh-syntax-highlighting
 URL_ZSH_SYNTAX_HIGHLIGHTING = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
 
 install/zsh-syntax-highlighting: ensure/XDG_CONFIG_DIR
-	[[ ! -d "$(XDG_CONFIG_DIR)/zsh/highlighting" ]] && \
-		git clone --depth=1 $(URL_ZSH_SYNTAX_HIGHLIGHTING) "$(XDG_CONFIG_DIR)/zsh/highlighting" || true
+	[[ ! -d "$(XDG_CONFIG_DIR)/zsh/highlighting" ]] \
+		&& git clone --depth=1 $(URL_ZSH_SYNTAX_HIGHLIGHTING) "$(XDG_CONFIG_DIR)/zsh/highlighting"  \
+		|| true
 
 # ==============================================================================
 
