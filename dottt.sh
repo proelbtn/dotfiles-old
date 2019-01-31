@@ -62,16 +62,17 @@ get_dependencies() {
 
 install() {
     [[ $# -eq 1 ]] || return 1
-    RECIPE=$1
 
     [[ "${INSTALL_STACK}" != "" ]] || INSTALL_STACK="$(mktemp)"
-    echo "${RECIPE}" >> "${INSTALL_STACK}"
+    echo "$1" >> "${INSTALL_STACK}"
 
     DEPENDENCIES="$(get_dependencies $1)"
     for dependency in ${DEPENDENCIES}
     do
         [[ "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" ]] || install "${dependency}"
     done
+
+    execute_on_recipe "$1" __dottt_install
 }
 
 # ==============================================================================
