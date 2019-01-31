@@ -5,13 +5,10 @@ cd $(dirname $0)
 # ==============================================================================
 
 execute_on_recipe() {
-    if test $# -ne 2
-    then
-        return 1
-    fi
+    [[ $# -eq 2 ]] || return 1
 
-    RECIPE=$1
-    COMMAND=$2
+    local RECIPE=$1
+    local COMMAND=$2
 
     # construct install script
     SRC="${SRC}$(cat ./scripts/header.zsh);"
@@ -27,10 +24,7 @@ execute_on_recipe() {
 # ==============================================================================
 
 get_recipes() {
-    if test $# -ne 0
-    then
-        return 1
-    fi
+    [[ $# -eq 1 ]] || return 1
 
     if test "$1" = "all"
     then
@@ -45,34 +39,27 @@ get_recipes() {
 
 # ==============================================================================
 
-list_recipes() {
-    RECIPES=$(command ls recipes)
-
-    echo ${RECIPES}
-}
-
-# ==============================================================================
-
 get_dependencies() {
     [[ $# -eq 1 ]] || return 1
-    RECIPE=$1
+    local RECIPE=$1
     execute_on_recipe ${RECIPE} __dottt_get_dependencies
     return $?
 }
 
 install() {
     [[ $# -eq 1 ]] || return 1
+    local RECIPE=$1
 
     [[ "${INSTALL_STACK}" != "" ]] || INSTALL_STACK="$(mktemp)"
-    echo "$1" >> "${INSTALL_STACK}"
+    echo "${RECIPE}" >> "${INSTALL_STACK}"
 
-    DEPENDENCIES="$(get_dependencies $1)"
+    local DEPENDENCIES="$(get_dependencies "${RECIPE}")"
     for dependency in ${DEPENDENCIES}
     do
         [[ "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" ]] || install "${dependency}"
     done
 
-    execute_on_recipe "$1" __dottt_install
+    execute_on_recipe "${RECIPE}" __dottt_install
 }
 
 # ==============================================================================
@@ -93,7 +80,7 @@ case $1 in
         shift; install $@
         ;;
     list ) 
-        shift; list_recipes $@
+        shift; get_recipes all
         ;;
     help ) usage ;;
     * ) 
