@@ -1,3 +1,5 @@
+DEPENDS_ON="zsh"
+
 install() {
     for file in "$(ls "${DOTTT_ROOT}/files")"
     do

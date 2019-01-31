@@ -2,6 +2,30 @@
 
 cd $(dirname $0)
 
+# ==============================================================================
+
+execute_on_recipe() {
+    if test $# -ne 2
+    then
+        return 1
+    fi
+
+    RECIPE=$1
+    COMMAND=$2
+
+    # construct install script
+    SRC="${SRC}$(cat ./scripts/header.zsh);"
+    SRC="${SRC}$(cat ./recipes/${RECIPE}/manifest.zsh);"
+    SRC="${SRC}${COMMAND}"
+    
+    # execute install script
+    sh -c "cd ./recipes/$1; ${SRC}"
+    
+    return $#
+}
+
+# ==============================================================================
+
 get_recipes() {
     if test $# -ne 0
     then
@@ -19,21 +43,38 @@ get_recipes() {
     fi
 }
 
+# ==============================================================================
+
 list_recipes() {
     RECIPES=$(command ls recipes)
 
     echo ${RECIPES}
 }
 
-install_recipes() {
-    # construct install script
-    SRC="${SRC}$(cat ./scripts/header.zsh);"
-    SRC="${SRC}$(cat ./recipes/$1/manifest.zsh);"
-    SRC="${SRC}__dottt_install"
+# ==============================================================================
 
-    # execute install script
-    sh -c "cd ./recipes/$1; ${SRC}"
+get_dependencies() {
+    [[ $# -eq 1 ]] || return 1
+    RECIPE=$1
+    execute_on_recipe ${RECIPE} __dottt_get_dependencies
+    return $?
 }
+
+install() {
+    [[ $# -eq 1 ]] || return 1
+    RECIPE=$1
+
+    [[ "${INSTALL_STACK}" != "" ]] || INSTALL_STACK="$(mktemp)"
+    echo "${RECIPE}" >> "${INSTALL_STACK}"
+
+    DEPENDENCIES="$(get_dependencies $1)"
+    for dependency in ${DEPENDENCIES}
+    do
+        [[ "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" ]] || install "${dependency}"
+    done
+}
+
+# ==============================================================================
 
 usage() {
     echo "Usage: ${0} command [argments...]"
@@ -44,9 +85,11 @@ usage() {
     echo "  list      Lists recipes."
 }
 
+# ==============================================================================
+
 case $1 in
     install ) 
-        shift; install_recipes $@
+        shift; install $@
         ;;
     list ) 
         shift; list_recipes $@
