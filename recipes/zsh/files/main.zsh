@@ -1,6 +1,6 @@
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 
-export PATH="${PATH}:${XDG_CONFIG_HOME}/zsh/bin"
+export PATH="${XDG_CONFIG_HOME}/zsh/bin:${PATH}"
 
 if test "$(ls "${XDG_CONFIG_HOME}/zsh/sources")" != ""
 then
