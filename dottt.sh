@@ -26,7 +26,13 @@ list_recipes() {
 }
 
 install_recipes() {
-    true
+    # construct install script
+    SRC="${SRC}$(cat ./scripts/header.zsh);"
+    SRC="${SRC}$(cat ./recipes/$1/manifest.zsh);"
+    SRC="${SRC}__dottt_install"
+
+    # execute install script
+    sh -c "cd ./recipes/$1; ${SRC}"
 }
 
 usage() {
