@@ -9,6 +9,12 @@ info() {
     printf "\e[0m"
 }
 
+error() {
+    printf "\e[1;31mError: \e[1;39m"
+    echo $@
+    printf "\e[0m"
+}
+
 __dottt_install() {
     install
 }
