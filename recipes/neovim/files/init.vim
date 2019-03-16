@@ -1,3 +1,5 @@
+" ==============================================================================
+
 if &compatible 
   set nocompatible
 endif
@@ -14,14 +16,17 @@ if dein#load_state('/home/proelbtn/.config/nvim/dein.vim')
   "call dein#add('Shougo/neosnippet-snippets')
   
   call dein#add('Shougo/denite.nvim')
+  call dein#add('Shougo/deoplete.nvim')
+  call dein#add('deoplete-plugins/deoplete-jedi')
 
   call dein#end()
   call dein#save_state()
 endif
 
+" ==============================================================================
+
 filetype plugin indent on
 syntax enable
-
 
 set smartindent
 set expandtab
@@ -36,6 +41,8 @@ set wrapscan
 set incsearch
 set inccommand=split
 
+
+
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -45,3 +52,7 @@ nnoremap j gj
 nnoremap k gk
 vnoremap j gj
 vnoremap k gk
+
+" ==============================================================================
+
+let g:deoplete#enable_at_startup = 1
