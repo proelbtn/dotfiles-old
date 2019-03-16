@@ -1,3 +1,8 @@
+#!/usr/bin/zsh
+
+###
+# some essential function
+###
 
 is_osx() {
     uname -a | grep "Darwin" >/dev/null 2>&1
@@ -9,13 +14,27 @@ is_linux() {
     return $?
 }
 
+###
+# environment variables
+###
+
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export PATH="${XDG_CONFIG_HOME}/zsh/bin:${PATH}"
+export EDITOR="nvim"
+
+###
+# zplug
+###
 
 source ~/.zplug/init.zsh
 
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+zplug "mafredri/zsh-async", from:github
+zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+
+
 if ! zplug check --verbose
 then
     printf "Install? [y/N]: "
@@ -24,11 +43,25 @@ then
     fi
 fi
 
+zplug load --verbose
+
+###
+# aliases
+###
+
 if is_linux
 then
     alias ls="ls --color"
 fi
 
+alias ttt="cd $(mktemp -d)"
+alias rrr="source ~/.zshrc"
+
+alias pingg="ping 8.8.8.8"
+  
+###
+# external script loading
+###
 
 if test "$(ls "${XDG_CONFIG_HOME}/zsh/sources")" != ""
 then
@@ -39,4 +72,3 @@ then
     done
 fi
 
-zplug load --verbose
