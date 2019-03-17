@@ -53,6 +53,15 @@ vnoremap k gk
 
 " ==============================================================================
 
+augroup AutoSave
+  au BufWritePost * mkview
+  autocmd BufReadPost * loadview
+augroup END
+
+" ==============================================================================
+
+let g:auto_save = 1
+
 let g:deoplete#enable_at_startup = 1
 
 let g:racer_cmd = '/home/proelbtn/.cargo/bin/racer'
