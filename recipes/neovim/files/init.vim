@@ -18,6 +18,7 @@ if dein#load_state('/home/proelbtn/.config/nvim/dein.vim')
   call dein#add('Shougo/denite.nvim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('deoplete-plugins/deoplete-jedi')
+  call dein#add('racer-rust/vim-racer')
 
   call dein#end()
   call dein#save_state()
@@ -34,14 +35,11 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 
-
 set ignorecase
 set smartcase
 set wrapscan
 set incsearch
 set inccommand=split
-
-
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -56,3 +54,5 @@ vnoremap k gk
 " ==============================================================================
 
 let g:deoplete#enable_at_startup = 1
+
+let g:racer_cmd = '/home/proelbtn/.cargo/bin/racer'
