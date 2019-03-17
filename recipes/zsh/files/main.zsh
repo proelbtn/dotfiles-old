@@ -58,6 +58,17 @@ alias ttt="cd $(mktemp -d)"
 alias rrr="source ~/.zshrc"
 
 alias pingg="ping 8.8.8.8"
+
+###
+# keybinding
+###
+
+bindkey -e
+
+bindkey -r "^[b"
+bindkey -r "^[f"
+bindkey "^b" backward-word
+bindkey "^f" forward-word
   
 ###
 # external script loading
