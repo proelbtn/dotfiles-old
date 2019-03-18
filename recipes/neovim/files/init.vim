@@ -53,9 +53,13 @@ vnoremap k gk
 
 " ==============================================================================
 
-augroup AutoSave
-  au BufWritePost * mkview
-  autocmd BufReadPost * loadview
+augroup AutoSaveView
+  autocmd!
+  autocmd BufWritePost * mkview
+  autocmd BufReadPost * silent! loadview
+  if expand("%") =~# ".*/\.git/.*"
+    autocmd! BufReadPost,BufWritePost *
+  endif
 augroup END
 
 " ==============================================================================
