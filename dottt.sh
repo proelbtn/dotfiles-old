@@ -5,7 +5,7 @@ cd $(dirname $0)
 # ==============================================================================
 
 execute_on_recipe() {
-    [[ $# -eq 2 ]] || return 1
+    test $# -eq 2 || return 1
 
     local RECIPE=$1
     local COMMAND=$2
@@ -24,7 +24,7 @@ execute_on_recipe() {
 # ==============================================================================
 
 get_recipes() {
-    [[ $# -eq 1 ]] || return 1
+    test $# -eq 1 || return 1
 
     if test "$1" = "all"
     then
@@ -40,23 +40,23 @@ get_recipes() {
 # ==============================================================================
 
 get_dependencies() {
-    [[ $# -eq 1 ]] || return 1
+    test $# -eq 1 || return 1
     local RECIPE=$1
     execute_on_recipe ${RECIPE} __dottt_get_dependencies
     return $?
 }
 
 install() {
-    [[ $# -eq 1 ]] || return 1
+    test $# -eq 1 || return 1
     local RECIPE=$1
 
-    [[ "${INSTALL_STACK}" != "" ]] || INSTALL_STACK="$(mktemp)"
+    test "${INSTALL_STACK}" != "" || INSTALL_STACK="$(mktemp)"
     echo "${RECIPE}" >> "${INSTALL_STACK}"
 
     local DEPENDENCIES="$(get_dependencies "${RECIPE}")"
     for dependency in ${DEPENDENCIES}
     do
-        [[ "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" ]] || install "${dependency}"
+        test "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" || install "${dependency}"
     done
 
     execute_on_recipe "${RECIPE}" __dottt_install
