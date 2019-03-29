@@ -69,6 +69,13 @@ bindkey -r "^[b"
 bindkey -r "^[f"
 bindkey "^b" backward-word
 bindkey "^f" forward-word
+
+###
+#
+###
+
+# refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
+stty -ixon -ixoff
   
 ###
 # external script loading
