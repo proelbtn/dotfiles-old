@@ -2,7 +2,8 @@ ZSH_ZPLUG_INSTALLER_URL="https://raw.githubusercontent.com/zplug/installer/maste
 
 install() {
     info "Installing zsh..."
-    mkdir -p ${XDG_CONFIG_HOME}/zsh/{bin,sources}
+    mkdir -p ${XDG_CONFIG_HOME}/zsh/bin
+    mkdir -p ${XDG_CONFIG_HOME}/zsh/sources
     ln -sf "${DOTTT_ROOT}/files/main.zsh" ~/.zshrc
 
     if test ! -d "${HOME}/.zplug"
