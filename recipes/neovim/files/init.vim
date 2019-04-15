@@ -18,6 +18,7 @@ if dein#load_state('/home/proelbtn/.config/nvim/dein.vim')
   call dein#add('Shougo/denite.nvim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('deoplete-plugins/deoplete-jedi')
+  call dein#add('deoplete-plugins/deoplete-go', {'build': 'make'})
   call dein#add('racer-rust/vim-racer')
 
   call dein#end()
@@ -45,6 +46,11 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <C-s><C-s> :Denite file/rec<CR>
+nnoremap <C-s><C-h> :vsplit<CR>
+nnoremap <C-s><C-j> :split<CR> <C-w><C-j>
+nnoremap <C-s><C-k> :split<CR>
+nnoremap <C-s><C-l> :vsplit<CR> <C-w><C-l>
 
 nnoremap j gj
 nnoremap k gk
@@ -69,3 +75,4 @@ let g:auto_save = 1
 let g:deoplete#enable_at_startup = 1
 
 let g:racer_cmd = '/home/proelbtn/.cargo/bin/racer'
+let g:racer_experimental_completer = 1

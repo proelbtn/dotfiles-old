@@ -54,10 +54,16 @@ then
     alias ls="ls --color"
 fi
 
-alias ttt="cd $(mktemp -d)"
-alias rrr="source ~/.zshrc"
+alias cdtemp="cd $(mktemp -d)"
+alias reload="source ~/.zshrc"
 
 alias pingg="ping 8.8.8.8"
+
+if is_linux
+then
+  alias copy="xclip -i -selection c"
+  alias paste="xclip -o -selection c"
+fi
 
 ###
 # keybinding
@@ -76,6 +82,13 @@ bindkey "^f" forward-word
 
 # refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
 stty -ixon -ixoff
+
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    ssh-agent > ~/.ssh-agent-thing
+fi
+if [[ ! "$SSH_AUTH_SOCK" ]]; then
+    eval "$(<~/.ssh-agent-thing)"
+fi
   
 ###
 # external script loading
