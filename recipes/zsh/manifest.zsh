@@ -1,5 +1,3 @@
-ZSH_ZPLUG_INSTALLER_URL="https://raw.githubusercontent.com/zplug/installer/master/installer.zsh"
-
 install() {
     info "Installing zsh..."
     mkdir -p ${XDG_CONFIG_HOME}/zsh/bin
@@ -8,6 +6,6 @@ install() {
 
     if test ! -d "${HOME}/.zplug"
     then
-        curl -sL --proto-redir -all,https "${ZSH_ZPLUG_INSTALLER_URL}" | zsh
+        git clone https://github.com/zplug/zplug ~/.zplug
     fi
 }
