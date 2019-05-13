@@ -4,8 +4,9 @@ cd $(dirname $0)
 
 # ==============================================================================
 
+# execute_on_recipe recipe_name command
 execute_on_recipe() {
-    test $# -eq 2 || return 1
+    test $# -eq 2 || exit 1
 
     local RECIPE=$1
     local COMMAND=$2
@@ -23,31 +24,24 @@ execute_on_recipe() {
 
 # ==============================================================================
 
+# get_recipes
 get_recipes() {
-    test $# -eq 1 || return 1
-
-    if test "$1" = "all"
-    then
-        ls ./recipes
-    elif stat ./recipes/"$1"
-    then
-        echo $1
-    else
-        return 1
-    fi
+    ls ./recipes
 }
 
 # ==============================================================================
 
+# get_dependencies recipe_name
 get_dependencies() {
-    test $# -eq 1 || return 1
+    test $# -eq 1 || exit 1
     local RECIPE=$1
     execute_on_recipe ${RECIPE} __dottt_get_dependencies
     return $?
 }
 
+# install recipe_name
 install() {
-    test $# -eq 1 || return 1
+    test $# -eq 1 || exit 1
     local RECIPE=$1
 
     test "${INSTALL_STACK}" != "" || INSTALL_STACK="$(mktemp)"
@@ -77,10 +71,22 @@ usage() {
 
 case $1 in
     install ) 
-        shift; install $@
+        shift; 
+        if [[ $# -eq 0 ]]
+        then
+            echo "Error: please specify the recipe's name"
+            usage
+            exit 1
+        fi
+
+        for recipe in $([[ "$@" != "all" ]] && echo "$@" || get_recipes)
+        do
+            install $recipe
+        done
         ;;
     list ) 
-        shift; get_recipes all
+        shift; 
+        get_recipes | sort | xargs
         ;;
     help ) usage ;;
     * ) 
