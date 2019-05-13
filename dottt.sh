@@ -18,7 +18,7 @@ execute_on_recipe() {
     # execute install script
     sh -c "cd ./recipes/$1; ${SRC}"
     
-    return $#
+    return $?
 }
 
 # ==============================================================================
