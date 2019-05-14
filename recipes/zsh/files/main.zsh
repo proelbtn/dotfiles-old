@@ -4,23 +4,36 @@
 # some essential function
 ###
 
-is_osx() {
-    uname -a | grep "Darwin" >/dev/null 2>&1
+silent() {
+    $@ >/dev/null 2>&1
+    return $?
+}
+
+is_macos() {
+    uname -a | silent grep "Darwin"
     return $?
 }
 
 is_linux() {
-    uname -a | grep "Linux" >/dev/null 2>&1
+    uname -a | silent grep "Linux"
     return $?
 }
+
 
 ###
 # environment variables
 ###
 
+export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 export PATH="${XDG_CONFIG_HOME}/zsh/bin:${PATH}"
-export EDITOR="nvim"
+
+silent which nvim && export EDITOR="nvim" \
+    || silent which vim && export EDITOR="vim" \
+    || silent which vi && export EDOTOR="vi"
 
 ###
 # zplug
@@ -52,6 +65,11 @@ zplug load --verbose
 if is_linux
 then
     alias ls="ls --color"
+fi
+
+if is_macos
+then
+    alias ls="ls -G"
 fi
 
 alias cdtemp="cd $(mktemp -d)"
