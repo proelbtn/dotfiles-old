@@ -6,3 +6,8 @@ then
 fi
 
 eval "$(anyenv init -)"
+
+# settings for goenv
+
+export GOPATH="${XDG_DATA_HOME}/go"
+export PATH="${PATH}:${GOPATH}/bin"
