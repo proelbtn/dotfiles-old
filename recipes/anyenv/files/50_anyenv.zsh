@@ -9,5 +9,12 @@ eval "$(anyenv init -)"
 
 # settings for goenv
 
-export GOPATH="${XDG_DATA_HOME}/go"
-export PATH="${PATH}:${GOPATH}/bin"
+export GOENV_GOPATH_PREFIX="${HOME}/.local/go"
+
+goenv rehash
+
+if [ "${GOPATH}" != "" ]
+then
+  export PATH="${PATH}:${GOPATH}/bin"
+fi
+
