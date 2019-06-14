@@ -1,4 +1,4 @@
-DEPENDS_ON="zsh"
+DEPENDS_ON="essentials/zsh"
 
 install() {
     info "Installing anyenv..."

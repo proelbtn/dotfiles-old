@@ -26,7 +26,13 @@ execute_on_recipe() {
 
 # get_recipes
 get_recipes() {
-    ls ./recipes
+    for dir in $(find recipes -type d | sed 's:recipes/::')
+    do
+        if [ -f "./recipes/${dir}/manifest.zsh" ]
+        then
+            echo $dir
+        fi
+    done
 }
 
 # ==============================================================================
