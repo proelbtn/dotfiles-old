@@ -6,7 +6,7 @@ cd $(dirname $0)
 
 # execute_on_recipe recipe_name command
 execute_on_recipe() {
-    test $# -eq 2 || exit 1
+    [ $# -eq 2 ] || exit 1
 
     local RECIPE=$1
     local COMMAND=$2
@@ -33,7 +33,7 @@ get_recipes() {
 
 # get_dependencies recipe_name
 get_dependencies() {
-    test $# -eq 1 || exit 1
+    [ $# -eq 1 ] || exit 1
     local RECIPE=$1
     execute_on_recipe ${RECIPE} __dottt_get_dependencies
     return $?
@@ -41,16 +41,16 @@ get_dependencies() {
 
 # install recipe_name
 install() {
-    test $# -eq 1 || exit 1
+    [ $# -eq 1 ] || exit 1
     local RECIPE=$1
 
-    test "${INSTALL_STACK}" != "" || INSTALL_STACK="$(mktemp)"
+    [ "${INSTALL_STACK}" != "" ] || INSTALL_STACK="$(mktemp)"
     echo "${RECIPE}" >> "${INSTALL_STACK}"
 
     local DEPENDENCIES="$(get_dependencies "${RECIPE}")"
     for dependency in ${DEPENDENCIES}
     do
-        test "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" || install "${dependency}"
+        [ "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" ] || install "${dependency}"
     done
 
     execute_on_recipe "${RECIPE}" __dottt_install
@@ -72,14 +72,14 @@ usage() {
 case $1 in
     install ) 
         shift; 
-        if [[ $# -eq 0 ]]
+        if [ $# -eq 0 ]
         then
             echo "Error: please specify the recipe's name"
             usage
             exit 1
         fi
 
-        for recipe in $([[ "$@" != "all" ]] && echo "$@" || get_recipes)
+        for recipe in $([ "$@" != "all" ] && echo "$@" || get_recipes)
         do
             install $recipe
         done
