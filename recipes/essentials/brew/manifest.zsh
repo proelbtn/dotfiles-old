@@ -1,3 +1,6 @@
+test() {
+    is_macos || error "brew can be installed on macOS." && return 1
+}
 
 install() {
     info "Installing brew..."

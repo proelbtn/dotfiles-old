@@ -15,6 +15,27 @@ error() {
     printf "\e[0m"
 }
 
+warning() {
+    printf "\e[1;33mError: \e[1;39m"
+    echo $@
+    printf "\e[0m"
+}
+
+silent() {
+    $@ >/dev/null 2>&1
+    return $?
+}
+
+is_macos() {
+    uname -a | silent grep "Darwin"
+    return $?
+}
+
+is_linux() {
+    uname -a | silent grep "Linux"
+    return $?
+}
+
 __dottt_install() {
     install
 }
