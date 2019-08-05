@@ -4,12 +4,12 @@ if &compatible
   set nocompatible
 endif
 
-set runtimepath+=/Users/proelbtn/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim
+set runtimepath+=~/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim
 
-if dein#load_state('/Users/proelbtn/.config/nvim/dein.vim')
-  call dein#begin('/Users/proelbtn/.config/nvim/dein.vim')
+if dein#load_state('~/.config/nvim/dein.vim')
+  call dein#begin('~/.config/nvim/dein.vim')
 
-  call dein#add('/Users/proelbtn/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim')
+  call dein#add('~/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim')
 
   " Add or remove your plugins here like this:
   "call dein#add('Shougo/neosnippet.vim')

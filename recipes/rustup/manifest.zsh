@@ -1,4 +1,4 @@
-DEPENDS_ON="essentials/zsh"
+DEPENDS_ON="zsh"
 
 install() {
     info "Installing rustup..."

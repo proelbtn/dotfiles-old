@@ -9,12 +9,14 @@ eval "$(anyenv init -)"
 
 # settings for goenv
 
-export GOENV_GOPATH_PREFIX="${HOME}/.local/go"
-
-goenv rehash
-
-if [ "${GOPATH}" != "" ]
+if [ "$(which goenv)" != "" ]
 then
-  export PATH="${PATH}:${GOPATH}/bin"
-fi
+  export GOENV_GOPATH_PREFIX="${HOME}/.local/go"
 
+  goenv rehash
+
+  if [ "${GOPATH}" != "" ]
+  then
+    export PATH="${PATH}:${GOPATH}/bin"
+  fi
+fi

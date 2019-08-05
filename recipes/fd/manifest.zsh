@@ -1,6 +1,6 @@
 if is_macos
 then
-    DEPENDS_ON="essentials/brew"
+    DEPENDS_ON="brew"
 fi
 
 install() {
