@@ -40,7 +40,8 @@ __dottt_tac() {
     if __dottt_is_linux
     then
         tac $@
-    elif
+    elif __dottt_is_macos
+    then
         tail -r $@
     fi
 }
