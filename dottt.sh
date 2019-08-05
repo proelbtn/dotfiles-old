@@ -26,13 +26,18 @@ __dottt_warning() {
     printf "\e[0m" 1>&2
 }
 
+__dottt_silent() {
+    $@ 1>/dev/null 2>&1
+    return $?
+}
+
 __dottt_is_macos() {
-    uname -a | silent grep "Darwin"
+    uname -a | __dottt_silent grep "Darwin"
     return $?
 }
 
 __dottt_is_linux() {
-    uname -a | silent grep "Linux"
+    uname -a | __dottt_silent grep "Linux"
     return $?
 }
 
@@ -108,7 +113,7 @@ __dottt_build_dependencies_stack() {
     do
         if [ "$(cat "$1" | grep "^${dep}$")" = "" ]
         then
-            __dottt_build_dependencies_list "$1" "${dep}"
+            __dottt_build_dependencies_stack "$1" "${dep}"
         fi
     done
 }
