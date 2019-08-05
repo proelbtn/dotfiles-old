@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cd $(dirname $0)
 
@@ -30,8 +30,6 @@ __dottt_warning() {
 
 # execute_on_recipe recipe_name command
 __dottt_execute_on_recipe() {
-    __dottt_is_a_valid_arguments ${FUNCNAME[0]} 2 $#
-
     local COMMAND=$2
 
     __dottt_is_a_valid_recipe_name "$1" || return 1
@@ -61,8 +59,6 @@ __dottt_get_recipes() {
 }
 
 __dottt_is_a_valid_recipe_name() {
-    __dottt_is_a_valid_arguments ${FUNCNAME[0]} 1 $#
-
     if [ ! -f "./recipes/$1/manifest.zsh" ]
     then
         __dottt_error "it is not a valid recipe name ($1)."
@@ -70,19 +66,9 @@ __dottt_is_a_valid_recipe_name() {
     fi
 }
 
-# __dottt_is_a_valid_arguments [funcname] [expected] [actually]
-__dottt_is_a_valid_arguments() {
-    if [ ! $2 -eq $3 ]
-    then
-        __dottt_internal_error "$1 takes $2 arguments, but $3 given."
-        return 1
-    fi
-}
-
 # ==============================================================================
 
 __dottt_get_dependencies() {
-    __dottt_is_a_valid_arguments ${FUNCNAME[0]} 1 $#
     __dottt_is_a_valid_recipe_name "$1" || return 1
 
     __dottt_execute_on_recipe "$1" __dottt_get_dependencies
@@ -90,21 +76,62 @@ __dottt_get_dependencies() {
     return $?
 }
 
-__dottt_install() {
-    __dottt_is_a_valid_arguments ${FUNCNAME[0]} 1 $#
-    __dottt_is_a_valid_recipe_name "$1" || return 1
 
-    [ "${INSTALL_STACK}" != "" ] || INSTALL_STACK="$(mktemp)"
-    echo "$1" >> "${INSTALL_STACK}"
+__dottt_build_dependencies_stack() {
+    # __dottt_build_dependencies_stack stack recipe
+    if [ "$(cat "$1" | grep -E "^$2$")" = "" ]
+    then
+        echo "$2" >> "$1"
+    fi
 
-    for dependency in $(__dottt_get_dependencies "$1")
+    for dep in $(__dottt_get_dependencies "$2")
     do
-        [ "$(cat "${INSTALL_STACK}" | grep "${dependency}")" != "" ] || __dottt_install "${dependency}"
+        if [ "$(cat "$1" | grep "^${dep}$")" = "" ]
+        then
+            __dottt_build_dependencies_list "$1" "${dep}"
+        fi
+    done
+}
+
+__dottt_install() {
+    # __dottt_install [recipes]
+    #   In this function, we will install some recipes.
+    #     1. check the arguments are valid
+    #     2. plan the installation
+    #     3. install the manifest
+
+    # 1. check the arguments are valid
+    for recipe in $@
+    do
+        if ! __dottt_is_a_valid_recipe_name "$1" 
+        then
+            __dottt_error "'$1' is not a valid recipe name..." 
+            return 1
+        fi
     done
 
-    __dottt_execute_on_recipe "$1" __dottt_install
+    # 2. plan the installation
+    STACK="$(mktemp)"
+    for recipe in $@
+    do
+        __dottt_build_dependencies_stack "${STACK}" "${recipe}"
+    done
 
-    return $?
+    MANIFEST="$(mktemp)"
+    tail -r ${STACK} >> "${MANIFEST}"
+
+    # 3. install the manifest
+    for recipe in $(cat "${MANIFEST}")
+    do
+        __dottt_execute_on_recipe "${recipe}" __dottt_install
+        STATUS=$?
+        if [ ${STATUS} -ne 0 ]
+        then
+            return ${STATUS}
+        fi
+    done
+
+    return 0
 }
 
 # ==============================================================================
@@ -131,10 +158,7 @@ case $1 in
             exit 1
         fi
 
-        for recipe in $@
-        do
-            __dottt_install $recipe
-        done
+        __dottt_install $@
         ;;
     list ) 
         shift; 
