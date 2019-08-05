@@ -26,6 +26,25 @@ __dottt_warning() {
     printf "\e[0m" 1>&2
 }
 
+__dottt_is_macos() {
+    uname -a | silent grep "Darwin"
+    return $?
+}
+
+__dottt_is_linux() {
+    uname -a | silent grep "Linux"
+    return $?
+}
+
+__dottt_tac() {
+    if __dottt_is_linux
+    then
+        tac $@
+    elif
+        tail -r $@
+    fi
+}
+
 # ==============================================================================
 
 # execute_on_recipe recipe_name command
@@ -118,7 +137,7 @@ __dottt_install() {
     done
 
     MANIFEST="$(mktemp)"
-    tail -r ${STACK} >> "${MANIFEST}"
+    __dottt_tac ${STACK} >> "${MANIFEST}"
 
     # 3. install the manifest
     for recipe in $(cat "${MANIFEST}")
