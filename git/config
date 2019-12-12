@@ -1,3 +1,9 @@
 [user]
 	email = proelbtn@users.noreply.github.com
 	name = proelbtn
+
+[help]
+	autocorrect = 1
+
+[color]
+	ui = true
