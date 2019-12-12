@@ -1,0 +1,5 @@
+# dotfiles
+
+## requirements
+
+- make
