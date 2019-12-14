@@ -6,16 +6,19 @@ TARGETS := \
 	${XDG_CONFIG_HOME}/zsh/bin \
 	${XDG_CONFIG_HOME}/zsh/sources
 
-.PHONY: install
-install: ${TARGETS}
+EXTRA_TARGETS := \
+	${XDG_CONFIG_HOME}/zsh
+
+include ${ROOT}/makefiles/commons.mk
+
 
 ${HOME}/.zshrc: ${CWD}/main.zsh
 	ln -sf $^ $@
 
-${XDG_CONFIG_HOME}/zsh/bin:
+${XDG_CONFIG_HOME}/zsh/bin: ${XDG_CONFIG_HOME}/zsh
 	mkdir -p $@
 
-${XDG_CONFIG_HOME}/zsh/sources:
+${XDG_CONFIG_HOME}/zsh/sources: ${XDG_CONFIG_HOME}/zsh
 	mkdir -p $@
 
 ${XDG_CONFIG_HOME}/zsh:

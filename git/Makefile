@@ -3,8 +3,7 @@ include ../makefiles/environments.mk
 TARGETS := \
 	${HOME}/.gitconfig \
 
-.PHONY: install
-install: ${TARGETS}
+include ${ROOT}/makefiles/commons.mk
 
 ${HOME}/.gitconfig: ${CWD}/config
 	ln -sf $^ $@
