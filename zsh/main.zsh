@@ -32,8 +32,8 @@ export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 export PATH="${XDG_CONFIG_HOME}/zsh/bin:${PATH}"
 
 silent which nvim && export EDITOR="nvim" \
-    || silent which vim && export EDITOR="vim" \
-    || silent which vi && export EDOTOR="vi"
+    || (silent which vim && export EDITOR="vim") \
+    || (silent which vi && export EDOTOR="vi")
 
 ###
 # zplug
