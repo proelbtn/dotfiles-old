@@ -1,26 +1,6 @@
 #!/usr/bin/zsh
 
 ###
-# some essential function
-###
-
-silent() {
-    $@ >/dev/null 2>&1
-    return $?
-}
-
-is_macos() {
-    uname -a | silent grep "Darwin"
-    return $?
-}
-
-is_linux() {
-    uname -a | silent grep "Linux"
-    return $?
-}
-
-
-###
 # environment variables
 ###
 
@@ -29,11 +9,11 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
-export PATH="${XDG_CONFIG_HOME}/zsh/bin:${PATH}"
 
 silent which nvim && export EDITOR="nvim" \
     || (silent which vim && export EDITOR="vim") \
     || (silent which vi && export EDOTOR="vi")
+
 
 ###
 # zplug
@@ -58,30 +38,20 @@ fi
 
 zplug load --verbose
 
+
 ###
 # aliases
 ###
 
-if is_linux
-then
-    alias ls="ls --color"
-fi
-
-if is_macos
-then
-    alias ls="ls -G"
-fi
+is_linux && alias ls="ls --color"
+is_darwin && alias ls="ls -G"
 
 alias cdtemp="cd $(mktemp -d)"
 alias reload="source ~/.zshrc"
 
-alias pingg="ping 8.8.8.8"
+is_linux && alias copy="xclip -i -selection c"
+is_linux && alias paste="xclip -o -selection c"
 
-if is_linux
-then
-  alias copy="xclip -i -selection c"
-  alias paste="xclip -o -selection c"
-fi
 
 ###
 # keybinding
@@ -94,6 +64,7 @@ bindkey -r "^[f"
 bindkey "^b" backward-word
 bindkey "^f" forward-word
 
+
 ###
 #
 ###
@@ -101,6 +72,7 @@ bindkey "^f" forward-word
 # refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
 stty -ixon -ixoff
   
+
 ###
 # external script loading
 ###
