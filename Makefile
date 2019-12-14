@@ -2,12 +2,13 @@ include ./makefiles/environments.mk
 
 MODULES := \
 	anyenv \
+	deadman \
 	git \
 	zsh
 
-install: zsh anyenv git 
+install: anyenv deadman git zsh
 
 .PHONY: ${MODULES} 
 ${MODULES}:
-	@if [ -d "./$@" ]; then cd "./$@"; make install; else echo "no such module: $@"; fi
+	@if [ -d "./$@" ]; then cd "./$@"; $(MAKE) install; else echo "no such module: $@"; fi
 
