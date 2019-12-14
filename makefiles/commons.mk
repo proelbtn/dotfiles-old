@@ -7,4 +7,4 @@ ${DEPENDENCIES}:
 
 .PHONY: clean
 clean:
-	rm -f ${TARGETS} ${EXTRA_TARGETS}
+	rm -rf ${TARGETS} ${EXTRA_TARGETS}
