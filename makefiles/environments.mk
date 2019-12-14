@@ -1,4 +1,5 @@
 CWD := $(shell pwd)
+ROOT := $(shell git rev-parse --show-toplevel)
 
 XDG_CACHE_HOME ?= ${HOME}/.cache
 
