@@ -100,13 +100,6 @@ bindkey "^f" forward-word
 
 # refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
 stty -ixon -ixoff
-
-if ! pgrep -u "$USER" ssh-agent > /dev/null; then
-    ssh-agent > ~/.ssh-agent-thing
-fi
-if [[ ! "$SSH_AUTH_SOCK" ]]; then
-    eval "$(<~/.ssh-agent-thing)"
-fi
   
 ###
 # external script loading
