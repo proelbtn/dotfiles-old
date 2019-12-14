@@ -11,7 +11,6 @@ EXTRA_TARGETS := \
 
 include ${ROOT}/makefiles/commons.mk
 
-
 ${HOME}/.zshrc: ${CWD}/main.zsh
 	ln -sf $^ $@
 
