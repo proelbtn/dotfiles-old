@@ -4,9 +4,10 @@ MODULES := \
 	anyenv \
 	deadman \
 	git \
+	neovim \
 	zsh
 
-install: anyenv deadman git zsh
+install: anyenv deadman git neovim zsh
 
 .PHONY: ${MODULES} 
 ${MODULES}:

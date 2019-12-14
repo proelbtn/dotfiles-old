@@ -4,6 +4,7 @@ SCRIPTS := $(shell cd scripts && find . -type f)
 SCRIPTS := ${SCRIPTS:./%=${HOME}/.local/bin/%}
 
 DIRECTORIES := \
+	${HOME}/.local/bin \
 	${XDG_CONFIG_HOME}/zsh \
 	${XDG_CONFIG_HOME}/zsh/bin \
 	${XDG_CONFIG_HOME}/zsh/sources
@@ -22,5 +23,5 @@ ${HOME}/.zshrc: ${CWD}/main.zsh
 ${HOME}/.zplug:
 	git clone https://github.com/zplug/zplug.git $@
 
-${SCRIPTS}:
+${SCRIPTS}: ${HOME}/.local/bin
 	ln -sf ${@:${HOME}/.local/bin/%=${CWD}/scripts/%} $@

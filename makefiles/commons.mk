@@ -6,7 +6,7 @@ ${DEPENDENCIES}:
 	@if [ -d "${ROOT}/$@" ]; then cd "${ROOT}/$@"; $(MAKE) install; else echo "no such module: $@"; fi
 
 ${DIRECTORIES}:
-	mkdir -p $@
+	[ ! -d "$@" ] && mkdir -p $@ || true
 
 .PHONY: clean
 clean:
