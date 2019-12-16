@@ -1,9 +1,5 @@
 " ==============================================================================
 
-if &compatible 
-  set nocompatible
-endif
-
 set runtimepath+=~/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim
 
 if dein#load_state('~/.config/nvim/dein.vim')
@@ -29,6 +25,8 @@ endif
 
 filetype plugin indent on
 syntax enable
+
+set number
 
 set smartindent
 set expandtab
