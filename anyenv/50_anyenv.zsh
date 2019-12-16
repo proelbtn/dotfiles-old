@@ -1,4 +1,4 @@
-export PATH="${HOME}/.anyenv/bin:${PATH}"
+export PATH="${XDG_CONFIG_HOME}/anyenv/bin:${PATH}"
 
 [ ! -d "${XDG_CONFIG_HOME}/anyenv/anyenv-install" ] && yes | anyenv install --init || true
 eval "$(anyenv init -)"
