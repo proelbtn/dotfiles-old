@@ -56,6 +56,13 @@ alias reload="source ~/.zshrc"
 is_linux && alias copy="xclip -i -selection c"
 is_linux && alias paste="xclip -o -selection c"
 
+alias gia="git add"
+alias giaa="git add ."
+alias gic="git commit"
+alias gii="git init"
+alias gip="git push"
+alias gipo="git push origin"
+alias gipom="git push origin master"
 
 ###
 # keybinding
