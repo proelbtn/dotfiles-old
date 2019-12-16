@@ -12,6 +12,8 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
+export TERM="xterm-256color"
+
 silent which nvim && export EDITOR="nvim" \
     || (silent which vim && export EDITOR="vim") \
     || (silent which vi && export EDOTOR="vi")
@@ -81,7 +83,7 @@ stty -ixon -ixoff
 
 if test "$(ls "${XDG_CONFIG_HOME}/zsh/sources")" != ""
 then
-    for file in "$(ls "${XDG_CONFIG_HOME}/zsh/sources" | sort)"
+    for file in $(command ls "${XDG_CONFIG_HOME}/zsh/sources" | sort)
     do
         [[ "$(echo ${file} | grep -e "^.*\.zsh$")" != "" ]] \
             && source "${XDG_CONFIG_HOME}/zsh/sources/${file}"
