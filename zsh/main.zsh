@@ -68,6 +68,11 @@ alias gipo="git push origin"
 alias gipoa="git push origin --all"
 alias gipom="git push origin master"
 
+alias ls="ls --color=tty"
+alias lsd="ls -D */"
+
+alias grep="grep --color=auto"
+
 ###
 # keybinding
 ###
@@ -92,11 +97,11 @@ stty -ixon -ixoff
 # external script loading
 ###
 
-if test "$(ls "${XDG_CONFIG_HOME}/zsh/sources")" != ""
+if [ "$(ls "${XDG_CONFIG_HOME}/zsh/sources")" != "" ]
 then
-    for file in $(command ls "${XDG_CONFIG_HOME}/zsh/sources" | sort)
+    for file in $(ls "${XDG_CONFIG_HOME}/zsh/sources" | sort)
     do
-        [[ "$(echo ${file} | grep -e "^.*\.zsh$")" != "" ]] \
+        [ "$(echo ${file} | grep -e "^.*\.zsh$")" != "" ] \
             && source "${XDG_CONFIG_HOME}/zsh/sources/${file}"
     done
 fi
