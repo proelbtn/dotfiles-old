@@ -5,14 +5,14 @@ SCRIPTS := ${SCRIPTS:./%=${HOME}/.local/bin/%}
 
 DIRECTORIES := \
 	${HOME}/.local/bin \
+	${XDG_DATA_HOME} \
 	${XDG_CONFIG_HOME}/zsh \
 	${XDG_CONFIG_HOME}/zsh/bin \
 	${XDG_CONFIG_HOME}/zsh/sources
 
 TARGETS := \
 	${HOME}/.zshrc \
-	${HOME}/.zplug \
-	${DIRECTORIES} \
+	${XDG_DATA_HOME}/zplugin \
 	${SCRIPTS}
 
 include ${ROOT}/makefiles/commons.mk
@@ -20,8 +20,8 @@ include ${ROOT}/makefiles/commons.mk
 ${HOME}/.zshrc: ${CWD}/main.zsh
 	ln -sf $^ $@
 
-${HOME}/.zplug:
-	git clone https://github.com/zplug/zplug.git $@
+${XDG_DATA_HOME}/zplugin:
+	git clone https://github.com/zdharma/zplugin.git $@
 
-${SCRIPTS}: ${HOME}/.local/bin
+${SCRIPTS}:
 	ln -sf ${@:${HOME}/.local/bin/%=${CWD}/scripts/%} $@

@@ -23,24 +23,16 @@ silent which nvim && export EDITOR="nvim" \
 # zplug
 ###
 
-source "${HOME}/.zplug/init.zsh"
+source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
 
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplg light zsh-users/zsh-autosuggestions
+zplg light zsh-users/zsh-syntax-highlighting
 
-zplug "mafredri/zsh-async", from:github
-zplug "sindresorhus/pure", use:pure.zsh, from:github, as:theme
+zplg ice pick"async.zsh" src"pure.zsh"
+zplg light sindresorhus/pure
 
-
-if ! zplug check --verbose
-then
-    printf "Install? [y/N]: "
-    if read -q; then
-        echo; zplug install
-    fi
-fi
-
-zplug load --verbose
+#zplugin light "mafredri/zsh-async", from:github
+#zplugin light "sindresorhus/pure", src"pure.zsh" from:github, as:theme
 
 
 ###
