@@ -18,6 +18,9 @@ silent which nvim && export EDITOR="nvim" \
     || (silent which vim && export EDITOR="vim") \
     || (silent which vi && export EDOTOR="vi")
 
+export HISTFILE=~/.zsh_history
+export HISTSIZE=1048576
+export SAVEHIST=1048576
 
 ###
 # zplug
@@ -25,14 +28,19 @@ silent which nvim && export EDITOR="nvim" \
 
 source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
 
+zplg light zsh-users/zsh-completions
 zplg light zsh-users/zsh-autosuggestions
 zplg light zsh-users/zsh-syntax-highlighting
 
 zplg ice pick"async.zsh" src"pure.zsh"
 zplg light sindresorhus/pure
 
-#zplugin light "mafredri/zsh-async", from:github
-#zplugin light "sindresorhus/pure", src"pure.zsh" from:github, as:theme
+setopt inc_append_history
+
+autoload -U compinit
+autoload -U zcalc
+
+compinit
 
 
 ###
@@ -78,13 +86,14 @@ bindkey -r "^[f"
 bindkey "^b" backward-word
 bindkey "^f" forward-word
 
-
 ###
 #
 ###
 
 # refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
 stty -ixon -ixoff
+
+
   
 
 ###
