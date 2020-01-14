@@ -47,7 +47,7 @@ setopt inc_append_history
 # aliases
 ###
 
-is_linux && alias ls="ls --color"
+is_linux && alias ls="ls --color=tty"
 is_darwin && alias ls="ls -G"
 
 alias cdtemp="cd $(mktemp -d)"
@@ -69,9 +69,6 @@ alias gipo="git push origin"
 alias gipoa="git push origin --all"
 alias gipom="git push origin master"
 alias gis="git status"
-
-alias ls="ls --color=tty"
-alias lsd="ls -D */"
 
 alias grep="grep --color=auto"
 
