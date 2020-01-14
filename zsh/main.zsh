@@ -28,20 +28,20 @@ export SAVEHIST=1048576
 
 source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
 
-zplg light zsh-users/zsh-completions
-zplg light zsh-users/zsh-autosuggestions
-zplg light zsh-users/zsh-syntax-highlighting
-
 zplg ice pick"async.zsh" src"pure.zsh"
 zplg light sindresorhus/pure
 
+zplg ice wait lucid atload"_zsh_autosuggest_start"
+zplg light zsh-users/zsh-autosuggestions
+
+zplg ice wait
+zplg light zsh-users/zsh-completions
+
+zplg ice wait atload"zpcompinit"
+zplg light zsh-users/zsh-syntax-highlighting
+
+
 setopt inc_append_history
-
-autoload -U compinit
-autoload -U zcalc
-
-compinit
-
 
 ###
 # aliases
@@ -51,7 +51,7 @@ is_linux && alias ls="ls --color"
 is_darwin && alias ls="ls -G"
 
 alias cdtemp="cd $(mktemp -d)"
-alias reload="source ~/.zshrc"
+alias reload="exec ${SHELL}"
 
 is_linux && alias copy="xclip -i -selection c"
 is_linux && alias paste="xclip -o -selection c"
@@ -80,7 +80,6 @@ alias grep="grep --color=auto"
 ###
 
 bindkey -e
-
 bindkey -r "^[b"
 bindkey -r "^[f"
 bindkey "^b" backward-word
@@ -92,9 +91,6 @@ bindkey "^f" forward-word
 
 # refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
 stty -ixon -ixoff
-
-
-  
 
 ###
 # external script loading
