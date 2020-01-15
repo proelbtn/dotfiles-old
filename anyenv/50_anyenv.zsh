@@ -8,7 +8,7 @@ export PATH="${PATH}:${GOPATH}/bin"
 
 # ===
 
-ENVS="$(command find ${XDG_CONFIG_HOME}/anyenv/envs/ -mindepth 1 -maxdepth 1 -type d)"
+ENVS="$(command find ${ANYENV_ROOT}/envs/ -mindepth 1 -maxdepth 1 -type d)"
 
 BINS=""
 for env in $(echo ${ENVS}); do BINS="${BINS} $(command find ${env}/shims -mindepth 1 -type f)"; done

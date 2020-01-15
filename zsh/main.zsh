@@ -23,7 +23,7 @@ export HISTSIZE=1048576
 export SAVEHIST=1048576
 
 ###
-# zplug
+# zplugin
 ###
 
 source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
@@ -102,3 +102,7 @@ then
     done
 fi
 
+
+# if you want to enable zprof (Zsh Profiler), you can add this line to ~/.zshenv
+#   zmodload zsh/zprof && zprof
+which zprof > /dev/null && zprof | less
