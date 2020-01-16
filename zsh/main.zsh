@@ -1,108 +1,36 @@
 #!/usr/bin/zsh
 
-###
-# environment variables
-###
-
-export PATH="${HOME}/.local/bin:${PATH}"
-
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-${HOME}/.config}"
 export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
-export TERM="xterm-256color"
-
-silent which nvim && export EDITOR="nvim" \
-    || (silent which vim && export EDITOR="vim") \
-    || (silent which vi && export EDOTOR="vi")
-
-export HISTFILE=~/.zsh_history
-export HISTSIZE=1048576
-export SAVEHIST=1048576
-
-###
-# zplugin
-###
-
 source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
 
 zplg ice pick"async.zsh" src"pure.zsh"
 zplg light sindresorhus/pure
 
-zplg ice wait lucid atload"_zsh_autosuggest_start"
+zplg ice wait"!0" lucid atload"_zsh_autosuggest_start"
 zplg light zsh-users/zsh-autosuggestions
 
-zplg ice wait
+zplg ice wait"!0"
 zplg light zsh-users/zsh-completions
 
-zplg ice wait atload"zpcompinit"
+zplg ice wait"!0" atload"zpcompinit"
 zplg light zsh-users/zsh-syntax-highlighting
 
-
 setopt inc_append_history
-
-###
-# aliases
-###
-
-is_linux && alias ls="ls --color=tty"
-is_darwin && alias ls="ls -G"
-
-alias cdtemp="cd $(mktemp -d)"
-alias reload="exec ${SHELL}"
-
-is_linux && alias copy="xclip -i -selection c"
-is_linux && alias paste="xclip -o -selection c"
-
-alias gia="git add"
-alias giaa="git add ."
-alias giap="git add -p ."
-alias gic="git commit"
-alias gica="git commit --amend"
-alias gicane="git commit --amend"
-alias gid="git diff"
-alias gii="git init"
-alias gip="git push"
-alias gipo="git push origin"
-alias gipoa="git push origin --all"
-alias gipom="git push origin master"
-alias gis="git status"
-
-alias grep="grep --color=auto"
-
-###
-# keybinding
-###
-
-bindkey -e
-bindkey -r "^[b"
-bindkey -r "^[f"
-bindkey "^b" backward-word
-bindkey "^f" forward-word
-
-###
-#
-###
 
 # refs: https://stackoverflow.com/questions/17991007/how-to-disable-keybinding-in-tmux
 stty -ixon -ixoff
 
-###
-# external script loading
-###
-
-if [ "$(ls "${XDG_CONFIG_HOME}/zsh/sources")" != "" ]
-then
-    for file in $(ls "${XDG_CONFIG_HOME}/zsh/sources" | sort)
-    do
-        [ "$(echo ${file} | grep -e "^.*\.zsh$")" != "" ] \
-            && source "${XDG_CONFIG_HOME}/zsh/sources/${file}"
-    done
-fi
-
+for file in $(command ls ${XDG_CONFIG_HOME}/zsh/sources/**/*.zsh); do
+  zplg ice wait"!0" aliases
+  zplg snippet ${file}
+done
 
 # if you want to enable zprof (Zsh Profiler), you can add this line to ~/.zshenv
 #   zmodload zsh/zprof && zprof
 which zprof > /dev/null && zprof | less
+
