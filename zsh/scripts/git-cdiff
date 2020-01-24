@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# refs: https://qiita.com/skoji/items/28f1d6582cf81638cd3f
+git diff --word-diff-regex=$'[^\x80-\xbf][\x80-\xbf]*' --word-diff=color $@
