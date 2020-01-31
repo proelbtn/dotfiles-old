@@ -1,13 +1,12 @@
 include ./makefiles/environments.mk
 
-MODULES := \
-	anyenv \
-	deadman \
-	git \
-	neovim \
-	zsh
+MODULES := $(shell ls -d */ | sed 's:/::g')
 
-install: anyenv deadman git neovim zsh
+all:
+
+minimal: zsh
+
+full:
 
 .PHONY: ${MODULES} 
 ${MODULES}:

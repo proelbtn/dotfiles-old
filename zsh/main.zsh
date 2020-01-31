@@ -6,10 +6,18 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
-source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
+export HISTFILE=~/.zsh_history
+export PATH="${HOME}/.local/bin:${PATH}"
+export TERM="xterm-256color"
 
-zplg ice pick"async.zsh" src"pure.zsh"
-zplg light sindresorhus/pure
+silent which nvim && export EDITOR="nvim" \
+    || (silent which vim && export EDITOR="vim") \
+    || (silent which vi && export EDOTOR="vi")
+
+export HISTSIZE=2048
+export SAVEHIST=2048
+
+source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
 
 zplg ice wait"!0" lucid atload"_zsh_autosuggest_start"
 zplg light zsh-users/zsh-autosuggestions
@@ -34,3 +42,10 @@ done
 #   zmodload zsh/zprof && zprof
 which zprof > /dev/null && zprof | less
 
+autoload -Uz promptinit
+promptinit
+
+prompt clint
+
+setopt hist_ignore_dups
+setopt extended_history

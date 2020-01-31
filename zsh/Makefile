@@ -12,7 +12,6 @@ DIRECTORIES := \
 TARGETS := \
 	${HOME}/.zshrc \
 	${XDG_DATA_HOME}/zplugin \
-	${XDG_CONFIG_HOME}/zsh/sources/00_exports.zsh \
 	${XDG_CONFIG_HOME}/zsh/sources/10_aliases.zsh \
 	${XDG_CONFIG_HOME}/zsh/sources/10_keybinding.zsh \
 	${SCRIPTS}
@@ -24,9 +23,6 @@ ${HOME}/.zshrc: ${CWD}/main.zsh
 
 ${XDG_DATA_HOME}/zplugin:
 	git clone https://github.com/zdharma/zplugin.git $@
-
-${XDG_CONFIG_HOME}/zsh/sources/00_exports.zsh: ${CWD}/00_exports.zsh
-	ln -sf $^ $@
 
 ${XDG_CONFIG_HOME}/zsh/sources/10_aliases.zsh: ${CWD}/10_aliases.zsh
 	ln -sf $^ $@
