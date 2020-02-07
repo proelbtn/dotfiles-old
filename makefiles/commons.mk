@@ -1,6 +1,9 @@
 .SILENT:
 
 
+all: install
+
+
 DEPENDENCIES ?= 
 PREINSTALL ?= 
 POSTINSTALL ?= 
