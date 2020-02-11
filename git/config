@@ -1,9 +1,12 @@
 [user]
 	email = proelbtn@users.noreply.github.com
 	name = proelbtn
+	signingkey = D011C329B5408075
 
 [help]
 	autocorrect = 1
 
 [color]
 	ui = true
+[commit]
+	gpgsign = true
