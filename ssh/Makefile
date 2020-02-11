@@ -5,8 +5,8 @@ DIRECTORIES := \
 	${HOME}/.ssh/config.d
 
 TARGETS := \
-	${HOME}/.ssh/config \
-	${DIRECTORIES}
+	${DIRECTORIES} \
+	${HOME}/.ssh/config
 
 include ${ROOT}/makefiles/commons.mk
 
