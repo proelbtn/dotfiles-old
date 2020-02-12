@@ -11,12 +11,12 @@ mapping = {
 
 def dump_layout(root):
     if not "layout" in root:
-        return ""
+        return "W"
 
     layout = mapping[root["layout"]]
+
     s = f"{layout}("
-    for node in root["nodes"]:
-        s += dump_layout(node)
+    s += ",".join([dump_layout(node) for node in root["nodes"]])
     s += ")"
 
     return s
