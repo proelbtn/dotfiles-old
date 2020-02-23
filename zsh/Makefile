@@ -3,6 +3,11 @@ include ../makefiles/environments.mk
 SCRIPTS := $(shell cd scripts && find . -type f)
 SCRIPTS := ${SCRIPTS:./%=${HOME}/.local/bin/%}
 
+SOURCES := \
+	00_environments.zsh \
+	10_aliases.zsh \
+	10_keybinding.zsh 
+
 DIRECTORIES := \
 	${HOME}/.local/bin \
 	${XDG_CONFIG_HOME}/zsh
@@ -10,16 +15,19 @@ DIRECTORIES := \
 TARGETS := \
 	${DIRECTORIES} \
 	${HOME}/.zshrc \
-	${XDG_CONFIG_HOME}/zsh/sources/10_aliases.zsh \
-	${XDG_CONFIG_HOME}/zsh/sources/10_keybinding.zsh \
+	${SOURCES:%=${XDG_CONFIG_HOME}/zsh/sources/%} \
 	${SCRIPTS}
 
 POSTINSTALL := \
-	${XDG_DATA_HOME}/zplugin
+	${XDG_DATA_HOME}/zinit
 
 include ${ROOT}/makefiles/commons.mk
 
 ${HOME}/.zshrc: ${CWD}/main.zsh
+	ln -sf $^ $@
+
+
+${XDG_CONFIG_HOME}/zsh/sources/00_environments.zsh: ${CWD}/00_environments.zsh
 	ln -sf $^ $@
 
 ${XDG_CONFIG_HOME}/zsh/sources/10_aliases.zsh: ${CWD}/10_aliases.zsh
@@ -31,5 +39,5 @@ ${XDG_CONFIG_HOME}/zsh/sources/10_keybinding.zsh: ${CWD}/10_keybinding.zsh
 ${SCRIPTS}:
 	ln -sf ${@:${HOME}/.local/bin/%=${CWD}/scripts/%} $@
 
-${XDG_DATA_HOME}/zplugin:
-	git clone https://github.com/zdharma/zplugin.git $@
+${XDG_DATA_HOME}/zinit:
+	git clone https://github.com/zdharma/zinit.git $@

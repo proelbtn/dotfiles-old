@@ -6,27 +6,16 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
-export HISTFILE=~/.zsh_history
-export PATH="${HOME}/.local/bin:${PATH}"
-export TERM="xterm-256color"
+source "${XDG_DATA_HOME}/zinit/zinit.zsh"
 
-silent which nvim && export EDITOR="nvim" \
-    || (silent which vim && export EDITOR="vim") \
-    || (silent which vi && export EDOTOR="vi")
+zinit ice wait"!0" lucid atload"_zsh_autosuggest_start"
+zinit light zsh-users/zsh-autosuggestions
 
-export HISTSIZE=2048
-export SAVEHIST=2048
+zinit ice wait"!0"
+zinit light zsh-users/zsh-completions
 
-source "${XDG_DATA_HOME}/zplugin/zplugin.zsh"
-
-zplg ice wait"!0" lucid atload"_zsh_autosuggest_start"
-zplg light zsh-users/zsh-autosuggestions
-
-zplg ice wait"!0"
-zplg light zsh-users/zsh-completions
-
-zplg ice wait"!0" atload"zpcompinit"
-zplg light zsh-users/zsh-syntax-highlighting
+zinit ice wait"!0" atload"zpcompinit"
+zinit light zsh-users/zsh-syntax-highlighting
 
 setopt inc_append_history
 
