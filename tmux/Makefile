@@ -13,5 +13,6 @@ tmux:
 	which -s tmux\
 		|| brew install tmux
 
-${HOME}/.tmux.conf: ${PWD}/tmux.conf
+${HOME}/.tmux.conf: ${CWD}/tmux.conf
 	ln -sf $^ $@
+
