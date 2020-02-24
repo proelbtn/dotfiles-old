@@ -1,2 +1,2 @@
-alias fzf="fzf --height 40% --reverse"
+export FZF_DEFAULT_OPTS="--height 40% --reverse"
 
