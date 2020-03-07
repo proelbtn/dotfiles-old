@@ -24,4 +24,4 @@ ${XDG_CONFIG_HOME}/nvim/init.vim: ${CWD}/init.vim ${XDG_CONFIG_HOME}/nvim
 
 ${XDG_CONFIG_HOME}/nvim/dein.vim: ${XDG_CONFIG_HOME}/nvim 
 	mkdir -p ${XDG_CONFIG_HOME}
-	[ ! -d "$$(dirname $@)" ] && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh /dev/stdin $@ || true
+	[ ! -d "$@" ] && curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh | sh /dev/stdin $@ || true
