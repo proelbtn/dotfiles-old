@@ -9,3 +9,5 @@ is_linux && alias paste="xclip -o -selection c"
 
 alias grep="grep --color=auto"
 
+alias s="grep -IR"
+
