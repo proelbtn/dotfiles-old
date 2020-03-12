@@ -10,7 +10,8 @@ SOURCES := \
 
 DIRECTORIES := \
 	${HOME}/.local/bin \
-	${XDG_CONFIG_HOME}/zsh
+	${XDG_CONFIG_HOME}/zsh \
+	${XDG_CONFIG_HOME}/zsh/sources
 
 TARGETS := \
 	${DIRECTORIES} \
