@@ -1,3 +1,0 @@
-#!/bin/bash
-
-notify-send "i3-layout: $(i3-save-tree | i3-parse-tree)"

@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-RESULTS="$(brew search | fzf-tmux -m --prompt='(homebrew: install) > ')"
-
-if [ "${RESULTS}" != "" ]; then
-  echo ${RESULTS} | xargs brew install
-fi

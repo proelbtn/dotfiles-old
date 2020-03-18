@@ -1,6 +1,0 @@
-#!/bin/sh
-
-OPTIONS="$@"
-[ "$OPTIONS" = "" ] && OPTIONS="-L"
-
-curl ${OPTIONS} www.google.com
