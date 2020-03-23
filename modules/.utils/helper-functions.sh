@@ -42,7 +42,7 @@ symlink() {
   done
   
   for src in ${srcs}; do
-    print_info "Creating symbolic link: ${C_PATH}${src} ${C_RESET} => ${C_PATH}${dst}"
+    print_info "Creating symbolic link: ${C_PATH}${dst} ${C_RESET} => ${C_PATH}${src}"
     ln -sf ${src} ${dst}
   done
 }
@@ -53,6 +53,10 @@ clone() {
       print_error 
       return 1
     fi
+
+    print_info "Updating repository: ${C_PATH}$2"
+    cd $2
+    git pull origin master
   else 
     print_info "Cloning repository: ${C_URL}$1 ${C_RESET}=> ${C_PATH}$2"
     git clone $1 $2

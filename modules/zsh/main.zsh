@@ -6,6 +6,8 @@ export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}"
 export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
 
+export HISTFILE=~/.zsh_history
+
 source "${XDG_DATA_HOME}/zinit/zinit.zsh"
 
 zinit ice wait"!0" lucid atload"_zsh_autosuggest_start"
@@ -23,8 +25,8 @@ setopt inc_append_history
 stty -ixon -ixoff
 
 for file in $(command ls ${XDG_CONFIG_HOME}/zsh/sources/**/*.zsh); do
-  zplg ice wait"!0" aliases
-  zplg snippet ${file}
+  zinit ice wait"!0" aliases
+  zinit snippet ${file}
 done
 
 # if you want to enable zprof (Zsh Profiler), you can add this line to ~/.zshenv
