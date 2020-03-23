@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+
+do_main() {
+  local infile=$1
+  local outfile=$2
+
+  local TMPDIR=$(mktemp -d)
+
+  gs \
+    -dNOPAUSE \
+    -dBATCH \
+    -sDEVICE=pdfwrite \
+    -sOutputFile="${TMPDIR}/${outfile}" \
+    -c ".setpdfwrite <</NeverEmbed [ ]>> setdistillerparams" \
+    -f "${infile}"
+
+  cp "${TMPDIR}/${outfile}" "${outfile}"
+
+  rm -rf "${TMPDIR}"
+}
+
+
+if [ $# -eq 1 ]; then
+  local infile=$1
+  local outfile=$1
+elif [ $# -eq 2 ]; then
+  local infile=$1
+  local outfile=$2
+else
+  echo "Usage:"
+  echo "  $0 INFILE OUTFILE"
+  exit 1
+fi
+
+
+do_main "${infile}" "${outfile}"
+

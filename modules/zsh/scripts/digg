@@ -1,0 +1,6 @@
+#!/bin/sh
+
+OPTIONS="$@"
+[ "$OPTIONS" = "" ] && OPTIONS=""
+
+dig ${OPTIONS} www.google.com

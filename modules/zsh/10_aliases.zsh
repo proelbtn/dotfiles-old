@@ -1,0 +1,1 @@
+/home/proelbtn/Workspaces/github.com/proelbtn/dotfiles/modules/zsh/00_environments.zsh
