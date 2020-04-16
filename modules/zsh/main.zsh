@@ -1,5 +1,10 @@
 #!/usr/bin/zsh
 
+silent() {
+  $@ >/dev/null 2>&1
+  return $?
+}
+
 typeset -U PATH
 
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-${HOME}/.cache}"
@@ -16,9 +21,14 @@ export SAVEHIST=65536
 
 export TERM="xterm-256color"
 
-silent which nvim && export EDITOR="nvim" \
-    || (silent which vim && export EDITOR="vim") \
-    || (silent which vi && export EDOTOR="vi")
+if silent which nvim; then
+  export EDITOR="nvim"
+elif silent which -q vim; then
+  export EDITOR="vim"
+elif silent which -q vi; then
+  export EDITOR="vi"
+fi
+
 
 
 source "${XDG_DATA_HOME}/zinit/zinit.zsh"

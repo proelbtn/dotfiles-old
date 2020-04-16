@@ -12,6 +12,34 @@ C_RESET="\033[00m\033[39m"
 C_PATH="${C_YELLOW}${C_BOLD}"
 C_URL="${C_GREEN}${C_BOLD}"
 
+is_darwin() {
+  [ "$(uname -s)" = "Darwin" ]
+  return $?
+}
+
+is_linux() {
+  [ "$(uname -s)" = "Linux" ]
+  return $?
+}
+
+if is_linux; then
+  if [ -f "/etc/lsb-release" ]; then
+    source /etc/lsb-release
+  else
+    print_warning "/etc/lsb-release is missing, some functionality may be not worked correctly."
+  fi
+fi
+
+is_archlinux() {
+  [ ${DISTRIB_ID} = "Arch" ]
+  return $_
+}
+
+is_ubuntu() {
+  [ ${DISTRIB_ID} = "Ubuntu" ]
+  return $_
+}
+
 print_info() {
   echo -e "${C_BLUE}${C_BOLD}==> ${C_RESET}${1}${C_RESET}"
 }
