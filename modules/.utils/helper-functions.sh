@@ -56,23 +56,37 @@ symlink() {
     return 1
   fi
 
-  srcs=""
-  dst=""
+  if [ $# -eq 2 ]; then
+    src=$1
+    dst=$2
 
-  while [ $# -ne 0 ]; do
-    if [ $# -ne 1 ]; then 
-      srcs="${srcs} $1"
-    else 
-      dst="$1"
+    print_info "Creating symbolic link: ${C_PATH}${dst} ${C_RESET}=> ${C_PATH}${src}"
+    ln -sf ${src} ${dst}
+  else
+    srcs=""
+
+    while [ $# -ne 0 ]; do
+      if [ $# -eq 1 ]; then 
+        dst="$1"
+      else 
+        srcs="${srcs} $1"
+      fi
+      shift
+    done
+  
+    # If multiple src are passed, we expect dst is directory
+    if [ -f ${dst} ]; then
+      print_error "dst must be directory, not file when srcs are passed."
+      return 1
     fi
 
-    shift
-  done
-  
-  for src in ${srcs}; do
-    print_info "Creating symbolic link: ${C_PATH}${dst} ${C_RESET} => ${C_PATH}${src}"
-    ln -sf ${src} ${dst}
-  done
+    mkdir -p ${dst}
+    for src in ${srcs}; do
+      filename="$(basename ${src})"
+      print_info "Creating symbolic link: ${C_PATH}${dst}/${filename} ${C_RESET}=> ${C_PATH}${src}"
+      ln -sf ${src} ${dst}
+    done
+  fi
 }
 
 clone() {
