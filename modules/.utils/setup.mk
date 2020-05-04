@@ -18,7 +18,7 @@ usage:
 # core targets are the list of target which should be declared in Makefile
 __CORE_TARGETS := install setup teardown uninstall
 
-__MODULES := $(shell command ls ${MODULE_ROOT})
+__MODULES := $(shell ls ${MODULE_ROOT})
 
 define gen-deps-rule = 
 .PHONY: dep-${1}-${2}

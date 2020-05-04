@@ -13,7 +13,6 @@ install:
 setup:
 	@dir ${XDG_CONFIG_HOME}/nvim
 	@dir ${PLUGIN_DIR}
-	@dir ${INSTALL_DIR}
 	@symlink ${CWD}/init.vim ${XDG_CONFIG_HOME}/nvim/init.vim
 	@clone https://github.com/Shougo/dein.vim ${INSTALL_DIR}
 
