@@ -7,15 +7,11 @@ if dein#load_state('~/.config/nvim/dein.vim')
 
   call dein#add('~/.config/nvim/dein.vim/repos/github.com/Shougo/dein.vim')
 
-  " Add or remove your plugins here like this:
-  "call dein#add('Shougo/neosnippet.vim')
-  "call dein#add('Shougo/neosnippet-snippets')
-  
   call dein#add('Shougo/denite.nvim')
   call dein#add('Shougo/deoplete.nvim')
   call dein#add('deoplete-plugins/deoplete-jedi')
   call dein#add('deoplete-plugins/deoplete-go', {'build': 'make'})
-  call dein#add('racer-rust/vim-racer')
+  call dein#add('google/vim-jsonnet')
 
   call dein#end()
   call dein#save_state()

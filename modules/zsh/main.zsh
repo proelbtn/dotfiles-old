@@ -70,7 +70,7 @@ alias reload="exec ${SHELL}"
 is_linux && alias copy="xclip -i -selection c"
 is_linux && alias paste="xclip -o -selection c"
 
-is_linux && alias ls="ls -hF --color=tty"
+is_linux && alias ls="ls -h --color=tty"
 is_darwin && alias ls="ls -G"
 
 # show AS number, use ICMP for trace
@@ -89,6 +89,7 @@ bindkey "^b" backward-word
 bindkey "^f" forward-word
 
 
+silent which kubectl && source <(kubectl completion zsh)
 
 
 # if you want to enable zprof (Zsh Profiler), you can add this line to ~/.zshenv
