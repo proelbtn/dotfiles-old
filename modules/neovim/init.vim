@@ -64,9 +64,18 @@ augroup END
 
 " ==============================================================================
 
+
 let g:auto_save = 1
 
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#sources#jedi#enable_typeinfo = 1
+let g:deoplete#sources#jedi#show_docstring = 1
 
-let g:racer_cmd = '/home/proelbtn/.cargo/bin/racer'
-let g:racer_experimental_completer = 1
+if executable("pyenv")
+  let pyenv_root = system("zsh -c 'echo -n $(pyenv prefix)'")
+  let pyenv_python3 = pyenv_root . "/bin/python3"
+  let g:python3_host_prog = pyenv_python3
+  let g:deoplete#sources#jedi#python_path = pyenv_python3
+  " TODO: enable extra_path
+endif
+
