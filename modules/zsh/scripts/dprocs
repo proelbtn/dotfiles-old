@@ -1,0 +1,9 @@
+#!/bin/sh
+
+for pid in $(ps ax | grep -v PID | grep -v $0 | awk '{ print $1; }'); do
+  ps ax | grep "^ *$pid " | grep -v grep
+  if [ -f /proc/$pid/exe ]; then
+    echo -n "\t=> "
+    ls -l /proc/$pid/exe | sed 's/.* -> //'
+  fi
+done
