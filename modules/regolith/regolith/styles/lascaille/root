@@ -1,0 +1,16 @@
+! -- Styles - Colors
+#include "/home/proelbtn/.config/regolith/styles/lascaille/color"
+
+! -- Styles - Fonts
+#include "/home/proelbtn/.config/regolith/styles/lascaille/typeface"
+
+! -- Styles - Theme
+#include "/home/proelbtn/.config/regolith/styles/lascaille/theme"
+
+! -- Applications
+! These files map values defined above into specific app settings.
+#include "/home/proelbtn/.config/regolith/styles/lascaille/st-term"
+#include "/home/proelbtn/.config/regolith/styles/lascaille/i3-wm"
+#include "/home/proelbtn/.config/regolith/styles/i3xrocks"
+#include "/home/proelbtn/.config/regolith/styles/rofi"
+#include "/home/proelbtn/.config/regolith/styles/gnome"
