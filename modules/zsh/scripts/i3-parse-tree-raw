@@ -1,0 +1,117 @@
+#!/usr/bin/python
+
+import argparse
+import json
+from struct import pack, unpack
+import socket
+import sys
+
+from dataclasses import dataclass
+from typing import Any, List
+
+
+@dataclass
+class Argument:
+    sock_path: str
+
+
+@dataclass
+class Node:
+    id: int
+    type: str
+    name: str
+    layout: str
+    focused: bool
+    children: List
+
+
+def has_focused_container(node: Node) -> bool:
+    focused = node.focused
+    for child in node.children:
+        focused |= has_focused_container(child)
+    return focused
+
+
+def __show_focused_tree(node: Node):
+    if len(node.children) == 0:
+        print("W", end="")
+    else:
+        if node.layout == "splith":
+            print("H", end="")
+        if node.layout == "splitv":
+            print("V", end="")
+        if node.layout == "tabbed":
+            print("T", end="")
+        if node.layout == "stacked":
+            print("S", end="")
+
+        print("(", end="")
+
+        flag = False
+        for child in node.children:
+            if flag:
+                print(",", end="")
+            __show_focused_tree(child)
+            flag = True
+
+        print(")", end="")
+
+
+def show_focused_tree(node: Node):
+    if node.type == "workspace" and node.name != "__i3_scratch":
+        if has_focused_container(node.children[0]):
+            __show_focused_tree(node.children[0])
+    else:
+        for child in node.children:
+            show_focused_tree(child)
+
+
+def parse_tree(tree: Any) -> Node:
+    children = []
+    for subtree in tree["nodes"]:
+        children.append(parse_tree(subtree))
+
+    return Node(
+        id=tree["id"],
+        type=tree["type"],
+        name=tree["name"],
+        layout=tree["layout"],
+        focused=tree["focused"],
+        children=children)
+
+
+def main(arg: Argument):
+    with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as sock:
+        sock.connect(arg.sock_path)
+
+        msg = b"i3-ipc" + pack("<LL", 0, 4)
+        sock.send(msg)
+        
+        if sock.recv(6) != b"i3-ipc":
+            return 1
+
+        m_len, m_type = unpack("<LL", sock.recv(8))
+
+        if m_type != 4:
+            return 1
+
+        msg = sock.recv(m_len).decode()
+        tree = json.loads(msg)
+        tree = parse_tree(tree)
+
+        show_focused_tree(tree)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="show i3 tree structure")
+    parser.add_argument(
+        "--sock-path",
+        help="i3 socket path",
+        required=True)
+
+    args = parser.parse_args()
+    ret = main(Argument(
+        sock_path=args.sock_path
+    ))
+
+    sys.exit(ret)
