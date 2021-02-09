@@ -65,9 +65,7 @@ augroup END
 
 let g:auto_save = 1
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#sources#jedi#enable_typeinfo = 1
-let g:deoplete#sources#jedi#show_docstring = 1
+let g:dein#auto_recache = 1
 
 if executable("pyenv")
   let pyenv_root = system("zsh -c 'echo -n $(pyenv prefix)'")
